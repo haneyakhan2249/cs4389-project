@@ -1,3 +1,5 @@
+from blowfish import Blowfish
+
 KEY_SIZE = 128
 HALF_SIZE = 64
 CHARACTER_SIZE = 8
@@ -25,10 +27,10 @@ def feistel_cipher(block):
     # gets the left half and right half of block
     left_half = block[0: (len(block) / 2)]
     right_half = block[(len(block) / 2): len(block)]
-    print 'Original Left Half:' + left_half
-    print 'Original Right Half:' + right_half
+    print('Original Left Half:' + left_half)
+    print('Original Right Half:' + right_half)
     for i in range(0, NUMBER_OF_ROUNDS):
-        print 'Round: ' + str(i)
+        print('Round: ' + str(i))
         ###############################TO DO #################################
     #     # Perform f function using right half and subkey for the round
     #     result = internal_function(right_half, subkeys[i])
@@ -80,7 +82,7 @@ def encrypt(plaintext):
 # This function needs to be written
 # F function
 def internal_function(half_block, subkey):
-    result = xor(half_block, )
+    # result = xor(half_block, )
     result = half_block
     return result
 
