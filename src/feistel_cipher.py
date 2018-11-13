@@ -82,8 +82,8 @@ def encrypt(plaintext):
 # This function needs to be written
 # F function
 def internal_function(half_block, subkey):
-    # result = xor(half_block, )
-    result = half_block
+    bf = Blowfish(subkey)
+    result = bf.encrypt(half_block)
     return result
 
 
