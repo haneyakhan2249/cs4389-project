@@ -6,6 +6,31 @@ CHARACTER_SIZE = 8
 NUMBER_OF_ROUNDS = 8
 NUMBER_OF_CHARACTERS = 16
 
+# Takes a string
+# Converts it into a pseudomorsecode string
+def morsecodify(string):
+    byte_array= ''.join(format(ord(i),'b').zfill(8) for i in string)
+    pseudo_morse_code = ""
+    print ( len(byte_array))
+    for i in byte_array:
+        if int(i) == 0:
+            pseudo_morse_code += str('(')
+        if int(i) == 1:
+            pseudo_morse_code += str(')')
+    return pseudo_morse_code
+# Takes a pseudomorsecode string
+# Converts it into a string
+def demorsecodify(pseudo_morse_code):
+    byte_array = '0b'
+    for i in pseudo_morse_code:
+        if i == '(':
+            byte_array += '0'
+        if i == ')':
+            byte_array += '1'
+    n = int(byte_array, 2)
+    plaintext = n.to_bytes((n.bit_length() + 7) // 8, 'big').decode()
+    return plaintext
+
 # This function is complete
 # XOR function between 2 strings
 def xor(operand_one, operand_two, length):
