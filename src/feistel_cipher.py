@@ -23,7 +23,7 @@ def xor(operand_one, operand_two, length):
 # This function is mostly complete (needs f function)
 # takes a block of input of 128 bytes
 # takes an array of subkeys
-def feistel_cipher(block):
+def feistel_cipher(block, subkeys):
     # gets the left half and right half of block
     left_half = block[0: (len(block) / 2)]
     right_half = block[(len(block) / 2): len(block)]
@@ -36,7 +36,8 @@ def feistel_cipher(block):
     #     result = internal_function(right_half, subkeys[i])
 
         # Performing XOR
-        xor_result = xor(right_half, left_half, NUMBER_OF_CHARACTERS/2)
+        hash_value = internal_function(right_half, subkeys[i])
+        xor_result = xor(hash_value, left_half, NUMBER_OF_CHARACTERS/2)
         # Permutation achieved through swapping
         # The new left half is the old right half
         left_half = right_half
@@ -50,7 +51,7 @@ def feistel_cipher(block):
 # This function is mostly complete (needs feistel cipher)
 # Takes some plaintext where each character is an ASCII character (8 bytes)
 # Returns the equivalent ciphertext
-def encrypt(plaintext):
+def encrypt(key, plaintext):
     # Stores the cipher text
     ciphertext = ""
     # Get the number of full blocks within the inputted plaintext
@@ -68,7 +69,7 @@ def encrypt(plaintext):
     # Creates an empty array of all the blocks from the text
     blocks = []
     # Stores each block into an array
-    for i in range(0, number_of_blocks):
+    for i in range(0, int(number_of_blocks)):
         # Stores the substrings in blocks
         blocks.append(padded_plaintext[(i * NUMBER_OF_CHARACTERS): ((i + 1) * NUMBER_OF_CHARACTERS)])
     # Applies encryption function on every block
@@ -117,7 +118,7 @@ def decrypt(ciphertext, subkeys):
 
 # Random Testing Dara
 
-# print test_encrypt('DUBDUBDUBDUBDUBDUBTESTTESTTESTTEST')
+print(feistel_cipher('DUBDUBDUBDUBDUBDUBTESTTESTTESTTEST'))
 # print test_feistel_cipher('DUBDUBDUBDUBDUBD')
 # print test_feistel_cipher('DUBDUB12djadnj76')
 
