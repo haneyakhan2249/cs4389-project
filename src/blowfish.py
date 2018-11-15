@@ -449,8 +449,8 @@ class Blowfish:
 			raise RuntimeError("Attempted to encrypt data of invalid block length: %s" %len (data))
 
 		# Use big endianess since that's what everyone else uses
-		cl = (data[3]) | ((data[2]) << 8) | ((data[1]) << 16) | ((data[0]) << 24)
-		cr = (data[7]) | ((data[6]) << 8) | ((data[5]) << 16) | ((data[4]) << 24)
+		cl = ord (data[3]) | (ord (data[2]) << 8) | (ord (data[1]) << 16) | (ord (data[0]) << 24)
+		cr = ord (data[7]) | (ord (data[6]) << 8) | (ord (data[5]) << 16) | (ord (data[4]) << 24)
 
 		xl, xr = self.cipher (cl, cr, self.DECRYPT)
 		chars = bytes ([
@@ -472,17 +472,17 @@ class Blowfish:
 # Module testing
 
 if __name__ == '__main__':
-	key = 'This is a test key'
+	key = b'This is a test key'
 	cipher = Blowfish (key)
 
-	print("Testing encryption:")
-	xl = 123456
-	xr = 654321
-	print("\tPlain text: (%s, %s)" %(xl, xr))
-	cl, cr = cipher.cipher (xl, xr, cipher.ENCRYPT)
-	print("\tCrypted is: (%s, %s)" %(cl, cr))
-	dl, dr = cipher.cipher (cl, cr, cipher.DECRYPT)
-	print("\tUnencrypted is: (%s, %s)" %(dl, dr))
+	# print("Testing encryption:")
+	# xl = 123456
+	# xr = 654321
+	# print("\tPlain text: (%s, %s)" %(xl, xr))
+	# cl, cr = cipher.cipher (xl, xr, cipher.ENCRYPT)
+	# print("\tCrypted is: (%s, %s)" %(cl, cr))
+	# dl, dr = cipher.cipher (cl, cr, cipher.DECRYPT)
+	# print("\tUnencrypted is: (%s, %s)" %(dl, dr))
 
 	print("Testing buffer encrypt:")
 	text = 'testtest'
@@ -490,4 +490,4 @@ if __name__ == '__main__':
 	crypted = cipher.encrypt (text)
 	print("\tEncrypted: %s" %crypted)
 	decrypted = cipher.decrypt (crypted)
-	print("\tDecrypted: %s" %decrypted)
+	print("\tDecrypted: %s" %decrypted.decode())
