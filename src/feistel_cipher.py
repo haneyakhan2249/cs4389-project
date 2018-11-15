@@ -25,19 +25,20 @@ def xor(operand_one, operand_two, length):
 # takes an array of subkeys
 def feistel_cipher(block, subkeys):
     # gets the left half and right half of block
-    left_half = block[0: (len(block) / 2)]
-    right_half = block[(len(block) / 2): len(block)]
-    print('Original Left Half:' + left_half)
-    print('Original Right Half:' + right_half)
+    left_half = block[0: int(len(block) / 2)]
+    right_half = block[int(len(block) / 2): len(block)]
+    # print('Original Left Half:' + left_half)
+    # print('Original Right Half:' + right_half)
     for i in range(0, NUMBER_OF_ROUNDS):
-        print('Round: ' + str(i))
         ###############################TO DO #################################
     #     # Perform f function using right half and subkey for the round
     #     result = internal_function(right_half, subkeys[i])
 
         # Performing XOR
-        hash_value = internal_function(right_half, subkeys[i])
-        xor_result = xor(hash_value, left_half, NUMBER_OF_CHARACTERS/2)
+        # print(subkeys)
+        # print(subkeys[i])
+        hash_value = internal_function(right_half, subkeys[i].encode())
+        xor_result = xor(hash_value, left_half, int(NUMBER_OF_CHARACTERS/2))
         # Permutation achieved through swapping
         # The new left half is the old right half
         left_half = right_half
@@ -73,11 +74,9 @@ def encrypt(key, plaintext):
         # Stores the substrings in blocks
         blocks.append(padded_plaintext[(i * NUMBER_OF_CHARACTERS): ((i + 1) * NUMBER_OF_CHARACTERS)])
     # Applies encryption function on every block
-    ######################### TO DO #####################################
-    # for i in blocks:
-    #     ciphertext += str(feistel_cipher(i, subkeys))
-
-    # print blocks
+    subkeys = create_subkeys(key)
+    for i in blocks:
+        ciphertext += str(feistel_cipher(i, subkeys))  
     return ciphertext
 
 # This function needs to be written
@@ -113,28 +112,29 @@ def create_subkeys(key):
 
     for i in range(0, NUMBER_OF_ROUNDS):
         start_index_one = i  # 0,1,2,3 ...
-        end_index_one = ( i + ( NUMBER_OF_ROUNDS / 2 ) )  # 4,5,6,7 .....
-        start_index_two = ( ( NUMBER_OF_CHARACTERS - ( NUMBER_OF_ROUNDS / 2) ) - i )  # 12,11,10,9 ....
-        end_index_two = ( NUMBER_OF_CHARACTERS  - i )  # 16,15,14,13 ....
+        end_index_one = int( i + ( NUMBER_OF_ROUNDS / 2 ) )  # 4,5,6,7 .....
+        start_index_two = int( ( NUMBER_OF_CHARACTERS - ( NUMBER_OF_ROUNDS / 2) ) - i )  # 12,11,10,9 ....
+        end_index_two = int( NUMBER_OF_CHARACTERS  - i )  # 16,15,14,13 ....
         subkeys.append( str(key[start_index_one:end_index_one] + key[start_index_two:end_index_two] ) )
     return subkeys
+
 
 # This function needs to be written (should be easy as reverse of encrypt)
 # Takes some plaintext where each character is an ASCII character (8 bytes)
 # Returns the equivalent ciphertext
-def decrypt(ciphertext, subkeys):
-    plaintext = ""
-    # Get the number of blocks within the inputted plaintext
-    number_of_blocks = len(plaintext) / 128
-    blocks = []
-    # Pad the last block
-    for i in range(0, number_of_blocks):
-        # Stores the substrings in blocks
-        blocks[i] = [(i * KEY_SIZE), ((i + 1) * KEY_SIZE)]
-    # Applies encryption function
-    for i in number_of_blocks:
-        ciphertext += str(feistel_cipher(number_of_blocks[i]))
-    return plaintext
+# def decrypt(ciphertext, subkeys):
+#     plaintext = ""
+#     # Get the number of blocks within the inputted plaintext
+#     number_of_blocks = len(plaintext) / 128
+#     blocks = []
+#     # Pad the last block
+#     for i in range(0, number_of_blocks):
+#         # Stores the substrings in blocks
+#         blocks[i] = [(i * KEY_SIZE), ((i + 1) * KEY_SIZE)]
+#     # Applies encryption function
+#     for i in number_of_blocks:
+#         ciphertext += str(feistel_cipher(number_of_blocks[i]))
+#     return plaintext
 
 
 
@@ -143,7 +143,8 @@ def decrypt(ciphertext, subkeys):
 
 # Random Testing Dara
 
-print(feistel_cipher('DUBDUBDUBDUBDUBDUBTESTTESTTESTTEST'))
+# print(create_subkeys("testtesttesttest"))
+print(encrypt("testtesttesttest", 'DUBDUBDUBDUBDUBDUBTESTTESTTESTTEST'))
 # print test_feistel_cipher('DUBDUBDUBDUBDUBD')
 # print test_feistel_cipher('DUBDUB12djadnj76')
 
