@@ -90,8 +90,33 @@ def internal_function(half_block, subkey):
 
 # This function needs to be written
 # Creates the subkeys for each round
+# Takes a key of characters
 def create_subkeys(key):
     subkeys = []
+    # 1st round - shift by 8 bytes 0-31, 96-127
+    # 2nd round - shift by 8 bytes 8-39, 88-119
+    # 3rd round - shift by 8 bytes 16-47, 80-111
+    # 4th round - shift by 8 bytes 24-55, 72-103
+    # 5th round - shift by 8 bytes 32-63, 64-95
+    # 6th round - shift by 8 bytes 40-71, 56-87
+    # 7th round - shift by 8 bytes 48-79, 48-79
+    # 8th round - shift by 8 bytes 56-87, 40-71
+
+    # 1st round - shift by 1 char 0-3, 12-15
+    # 2nd round - shift by 1 char 1-4, 11-14
+    # 3rd round - shift by 1 char 2-5, 10-13
+    # 4th round - shift by 1 char 3-6, 9-12
+    # 5th round - shift by 1 char 4-7, 8-11
+    # 6th round - shift by 1 char 5-8, 7-10
+    # 7th round - shift by 1 char 6-9, 6-9
+    # 8th round - shift by 1 char 7-10, 5-8
+
+    for i in range(0, NUMBER_OF_ROUNDS):
+        start_index_one = i  # 0,1,2,3 ...
+        end_index_one = ( i + ( NUMBER_OF_ROUNDS / 2 ) )  # 4,5,6,7 .....
+        start_index_two = ( ( NUMBER_OF_CHARACTERS - ( NUMBER_OF_ROUNDS / 2) ) - i )  # 12,11,10,9 ....
+        end_index_two = ( NUMBER_OF_CHARACTERS  - i )  # 16,15,14,13 ....
+        subkeys.append( str(key[start_index_one:end_index_one] + key[start_index_two:end_index_two] ) )
     return subkeys
 
 # This function needs to be written (should be easy as reverse of encrypt)
