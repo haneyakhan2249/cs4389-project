@@ -14,7 +14,7 @@ How to Run:
 - No specific OS requirements - should work on any OS.
 - Runs using python3 (not python2).
 - Command line call:
-    - to encrypt: `python src/nested.py --encrypt [16-bit key] [plaintext]`
-    - to decrypt: `python src/nested.py --decrypt [16-bit key] [ciphertext]`
+    - to encrypt: `python src/nested.py --encrypt [16-char key] [plaintext]`
+    - to decrypt: `python src/nested.py --decrypt [16-char key] [ciphertext]`
 
 
