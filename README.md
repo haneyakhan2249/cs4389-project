@@ -14,5 +14,7 @@ How to Run:
 - No specific OS requirements - should work on any OS.
 - Runs using python3 (not python2).
 - Command line call:
+    - to encrypt: `python algo.py encrypt [16-bit key] [plaintext]`
+    - to decrypt: `python algo.py decrypt [16-bit key] [ciphertext]`
 
 
