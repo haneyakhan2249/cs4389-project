@@ -180,21 +180,24 @@ if __name__ == '__main__':
 
     if(len(sys.argv) != 4):
         print("\nPlease provide three arguments!")
-        print(" - to encrypt: python nested.py encrypt [16-bit key] [plaintext]")
-        print(" - to decrypt: python nested.py decrypt [16-bit key] [ciphertext]\n")
+        print(" - to encrypt: python nested.py --encrypt [16-bit key] [plaintext]")
+        print(" - to decrypt: python nested.py --decrypt [16-bit key] [ciphertext]\n")
     else:
         func = sys.argv[1]
         key = sys.argv[2]
         text = sys.argv[3]
 
         if(len(key) != 16):
-            print("\nKey size should be 16 bits\n")
+            print("\nPlease use a 16-bit key.\n")
             exit()
 
-        if(func == 'encrypt'):
+        if(func == '--encrypt'):
             print("\n" + encrypt(key, text) + "\n")
-        elif(func == 'decrypt'):
+        elif(func == '--decrypt'):
             print("\n" + decrypt(key, text) + "\n")  
+        else:
+            print("Please enter valid function.")
+            exit()
 
 
 
