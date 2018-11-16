@@ -180,8 +180,8 @@ if __name__ == '__main__':
 
     if(len(sys.argv) != 4):
         print("\nPlease provide three arguments!")
-        print(" - to encrypt: python algo.py encrypt [16-bit key] [plaintext]")
-        print(" - to decrypt: python algo.py decrypt [16-bit key] [ciphertext]\n")
+        print(" - to encrypt: python nested.py encrypt [16-bit key] [plaintext]")
+        print(" - to decrypt: python nested.py decrypt [16-bit key] [ciphertext]\n")
     else:
         func = sys.argv[1]
         key = sys.argv[2]
